@@ -1,0 +1,20 @@
+
+
+
+pipeline {
+    agent any
+    
+    tools {
+    	maven 'M3'
+  	}
+  	
+  	stages {
+    	stage('echo') {
+            steps {
+                sh 'mvn --version'
+            }
+        }
+        
+   	}
+    
+}
