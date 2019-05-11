@@ -14,7 +14,30 @@ pipeline {
                 sh 'mvn --version'
             }
         }
+        stage('build') {
+            steps {
+                sh 'mvn -f arith-api/pom.xml clean package'
+            }
+            post {
+	            always {
+	                junit 'arith-api/target/surefire-reports/*.xml'
+	            }
+         	}
+        }
+        stage('Staging') {
+	        steps {
+	           input "Ready to go"
+	       }
+    	}
         
    	}
+   	
+   	post {
+	    always {
+	         emailext subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                to: "Developer",
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}"
+	    }
+	}
     
 }
