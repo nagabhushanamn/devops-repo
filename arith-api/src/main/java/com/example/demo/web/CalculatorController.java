@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ public class CalculatorController {
 	private CalculatorService calculatorService;
 
 	@GetMapping
-	public double doArith(double n1, double n2, String op) {
+	public double doArith(@RequestParam double n1,@RequestParam double n2,@RequestParam String op) {
 		switch (op) {
 		case "add":
 			return this.calculatorService.add(n1, n2);
